@@ -1,0 +1,104 @@
+---
+title: "Probability & Probability Distributions"
+output: html_document
+---
+
+# Formative Assessment 6
+
+**Name:** CALALANG, JHAN CAZHANDRA D.
+
+**Section:** APM1110 - SECTION 2
+
+# Section I. Geometric Distribution
+
+The geometric distribution models the number of trials required to achieved the first success in a sequence of Bernouli trials.
+
+```{r}
+p <- 0.2
+```
+
+```{r}
+x <- rgeom(1000, prob = p) + 1
+```
+
+```{r}
+mean_x <- mean(x)
+var_x <- var(x)
+sd_x <- sd(x)
+```
+
+```{r}
+cat("Number of trials required to achieve first success:", x[1], "\n")
+cat("Mean (in 2 decimal places):", sprintf("%.2f", mean_x), "\n")
+cat("Variance (in 2 decimal places):", sprintf("%.2f", var_x), "\n")
+cat("Standard deviation (in 2 decimal places):", sprintf("%.2f", sd_x), "\n")
+```
+
+```{r}
+hist(
+  x,
+  main = "Histogram of Geometric Distribution",
+  xlab = "Number of Trials Required for First Success",
+  ylab = "Frequency"
+)
+```
+
+# Section II. Hypergeometric Distribution
+
+The problem states that 10% of the IC chips are expected to be defective. A sample of 10 chips is selected, and the probability that the sample contains more than 10% defectives is estimated using the hypergeometric distribution.
+
+## 1. A sample of 10 is selected from a box of 40
+
+For a box of 40 chips, 10% of the chips are expected to be defective. Therefore, the number of defective chips is 4, and the sample size is 10.
+
+```{r}
+N1 <- 40
+K1 <- 4
+n1 <- 10
+```
+
+```{r}
+prob_1 <- 1 - phyper(1, m = K1, n = N1 - K1, k = n1)
+
+prob_1
+```
+
+```{r}
+cat("Probability of more than 10% defectives:", sprintf("%.4f", prob_1), "\n")
+cat("Percentage:", sprintf("%.2f%%", prob_1 * 100), "\n")
+```
+
+The probability represents the chance that a rancom sample of 10 chips from a box of 40 contains at least 2 defective chips, which is more than 10% of the sample.
+
+## 2. A sample of 10 is selected from a box of 5000
+
+For a box of 5000 chips, 10% of the chips are expected to be defective. Therefore, the number of defective chips is 500, and the sample size is 10.
+
+```{r}
+N2 <- 5000
+K2 <- 500
+n2 <- 10
+```
+
+```{r}
+prob_2 <- 1 - phyper(1, m = K2, n = N2 - K2, k = n2)
+
+prob_2
+```
+
+```{r}
+cat("Probability of more than 10% defectives:", sprintf("%.4f", prob_2), "\n")
+cat("Percentage:", sprintf("%.2f%%", prob_2 * 100), "\n")
+```
+
+The probability represents the chance that a random sample of 10 chips from a box of 5000 contains at least 2 defective chips, which is more than 10% of the sample.
+
+# Summary of Hypergeometric Results
+
+```{r}
+data.frame(
+  Case = c("10 chips from 40", "10 chips from 5000"),
+  Probability = c(prob_1, prob_2),
+  Percentage = c(prob_1 * 100, prob_2 * 100)
+)
+```
